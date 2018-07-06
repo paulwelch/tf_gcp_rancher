@@ -5,15 +5,15 @@ data "template_file" "rke-config" {
   template = <<EOF
 nodes:
   - address: $${server1_addr} # hostname or IP to access nodes
-    user: root # root user (usually 'root')
+    user: rancher # root user (usually 'root')
     role: [controlplane,etcd,worker] # K8s roles for node
     ssh_key_path: ~/.ssh/id_rsa # path to PEM file
-  - address: $${server1_addr}
-    user: root
+  - address: $${server2_addr}
+    user: rancher
     role: [controlplane,etcd,worker]
     ssh_key_path: ~/.ssh/id_rsa
-  - address: $${server1_addr}
-    user: root
+  - address: $${server3_addr}
+    user: rancher
     role: [controlplane,etcd,worker]
     ssh_key_path: ~/.ssh/id_rsa
 
@@ -121,11 +121,11 @@ EOF
 
   vars {
     fqdn = "${var.fqdn}"
-    #server1_addr = "${ google_compute_instance.rancher.*.network_interface.address }"
-    #server2_addr = "${ google_compute_instance.rancher[2].network_interface.address }"
-    #server3_addr = "${ google_compute_instance.rancher[3].network_interface.address }"
-    server1_addr = ""
-    server2_addr = ""
-    server3_addr = ""
+    server1_addr = "${ google_compute_instance.rancher.0.network_interface.0.address }"
+    server2_addr = "${ google_compute_instance.rancher.1.network_interface.0.address }"
+    server3_addr = "${ google_compute_instance.rancher.2.network_interface.0.address }"
+    #server1_addr = ""
+    #server2_addr = ""
+    #server3_addr = ""
   }
 }
