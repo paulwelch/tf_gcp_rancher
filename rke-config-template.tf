@@ -5,15 +5,15 @@ data "template_file" "rke-config" {
   template = <<EOF
 nodes:
   - address: $${server1_addr} # hostname or IP to access nodes
-    user: paul # root user (usually 'root')
+    user: root # root user (usually 'root')
     role: [controlplane,etcd,worker] # K8s roles for node
     ssh_key_path: ~/.ssh/id_rsa # path to PEM file
   - address: $${server1_addr}
-    user: paul
+    user: root
     role: [controlplane,etcd,worker]
     ssh_key_path: ~/.ssh/id_rsa
   - address: $${server1_addr}
-    user: paul
+    user: root
     role: [controlplane,etcd,worker]
     ssh_key_path: ~/.ssh/id_rsa
 

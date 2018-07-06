@@ -6,6 +6,9 @@
 # Potentially sensitive information in vars
 *.tfvars
 
+# Git
+.gitmodules
+
 # Module directory
 .terraform/
 
