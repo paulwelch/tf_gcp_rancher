@@ -1,0 +1,6 @@
+[submodule "gcp-modules/terraform-google-lb-internal"]
+	path = gcp-modules/terraform-google-lb-internal
+	url = https://github.com/GoogleCloudPlatform/terraform-google-lb-internal.git
+[submodule "gcp-modules/terraform-google-lb-http"]
+	path = gcp-modules/terraform-google-lb-http
+	url = https://github.com/GoogleCloudPlatform/terraform-google-lb-http.git

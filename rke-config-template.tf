@@ -1,4 +1,6 @@
-variable "fqdn" { }
+#variable "fqdn" { }
+variable "tls_key_base64" {}
+variable "tls_crt_base64" {}
 
 data "template_file" "rke-config" {
 
@@ -47,11 +49,21 @@ addons: |-
   apiVersion: v1
   kind: Secret
   metadata:
+    name: cattle-keys-ingress
+    namespace: cattle-system
+  type: Opaque
+  data:
+    tls.crt: $${tls_crt_base64}
+    tls.key: $${tls_key_base64}
+  ---
+  apiVersion: v1
+  kind: Secret
+  metadata:
     name: cattle-keys-server
     namespace: cattle-system
   type: Opaque
   data:
-    cacerts.pem: <BASE64_CA>  # CA cert used to sign cattle server cert and key
+    cacerts.pem: $${tls_crt_base64}
   ---
   apiVersion: v1
   kind: Service
@@ -120,12 +132,12 @@ addons: |-
 EOF
 
   vars {
-    fqdn = "${var.fqdn}"
+    #fqdn = "${var.fqdn}"
+    fqdn = "rancher.${module.gce-lb-http.external_ip}.xip.io"
     server1_addr = "${ google_compute_instance.rancher.0.network_interface.0.address }"
     server2_addr = "${ google_compute_instance.rancher.1.network_interface.0.address }"
     server3_addr = "${ google_compute_instance.rancher.2.network_interface.0.address }"
-    #server1_addr = ""
-    #server2_addr = ""
-    #server3_addr = ""
+    tls_crt_base64 = "${var.tls_crt_base64}"
+    tls_key_base64 = "${var.tls_key_base64}"
   }
 }

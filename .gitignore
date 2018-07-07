@@ -19,3 +19,4 @@
 
 #Google Creds
 gcp-credentials.json
+*.pem
