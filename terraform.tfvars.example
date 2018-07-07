@@ -1,0 +1,17 @@
+public_key_file  = "~/.ssh/id_rsa.cloud.pub"
+private_key_file = "~/.ssh/id_rsa.cloud"
+
+### GCP Vars
+credentials = ""
+project     = ""
+region      = "us-west1"
+zone        = "us-west1-a"
+service_account_email = ""
+#recommended production size: machine_type = "n1-standard-2"
+machine_type = "g1-small"
+
+### Certs
+tls_key_file = "key-xip.pem"
+tls_crt_file = "cert-xip.pem"
+tls_crt_base64 = ""
+tls_key_base64 = ""
