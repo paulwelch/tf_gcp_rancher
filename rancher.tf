@@ -1,17 +1,12 @@
-
+variable "ssh_user" { }
 variable "credentials" { }
 variable "project" { }
 variable "region" { }
 variable "zone" { }
 variable "machine_type" { }
 variable "service_account_email" { }
-variable "tls_key_file" {
-  default = "key-xip.pem"
-}
-variable "tls_crt_file" {
-  default = "cert-xip.pem"
-}
-
+variable "tls_key_file" { }
+variable "tls_crt_file" { }
 
 #####################################################################
 
@@ -122,7 +117,7 @@ resource "null_resource" "ssh" {
 
   connection {
     host = "${element(google_compute_instance.rancher.*.network_interface.0.access_config.0.assigned_nat_ip, count.index)}"
-    user = "paul"
+    user = "${var.ssh_user}"
   }
 
   provisioner "file" {
@@ -145,7 +140,7 @@ resource "null_resource" "rke" {
 
   connection {
     host = "${google_compute_instance.rancher.0.network_interface.0.access_config.0.assigned_nat_ip}"
-    user = "paul"
+    user = "${var.ssh_user}"
   }
 
   provisioner "file" {
